@@ -14,38 +14,14 @@ namespace OOP
     {
         public static void Main(string[] args)
         {
-            ITransactionStorage storage = new TransactionStorage();
 
-            // Adding a product using Singleton ProductManager
-            Product product1 = new Product
-            {
-                ProductID = 1,
-                Name = "Product A",
-                Description = "Description of Product A",
-                Price = 10.99,
-                Stock = 100,
-                CreatedAt = DateTime.Now,
-                ShopID = 1
-            };
+            var transactionFacade = new TransactionFacade();
 
-            ProductManager.Instance.AddProduct(product1);
+            Console.WriteLine("Saving Order...");
+            transactionFacade.SaveTransaction("Order"); // Save Order
 
-            // Retrieving products
-            var products = ProductManager.Instance.GetProducts();
-            foreach (var product in products)
-            {
-                Console.WriteLine($"ID: {product.ProductID}, Name: {product.Name}, Price: {product.Price}");
-            }
-
-            // Using the TransactionFactory to create an Order and ShoppingCart
-            Transaction newOrder = TransactionFactory.CreateTransaction("Order");
-            Transaction cart = TransactionFactory.CreateTransaction("ShoppingCart");
-
-            // Save the newly created Order
-            storage.SaveTransaction(newOrder);
-
-            // Save the newly created ShoppingCart
-            storage.SaveTransaction(cart);
+            Console.WriteLine("Saving ShoppingCart...");
+            transactionFacade.SaveTransaction("ShoppingCart"); // Save ShoppingCart
         }
     }
 }
